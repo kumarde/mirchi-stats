@@ -2,8 +2,14 @@ import groupy
 import pickle
 
 groups = groupy.Group.list()
-logs = groups[0]
-mirchi = groups[1]
+logs = groups[1]
+mirchi = groups[0]
+
+with open('mirchi_group', 'wb') as f:
+    pickle.dump(mirchi, f)
+
+with open('log_group', 'wb') as f:
+    pickle.dump(logs, f)
 
 log_messages = logs.messages()
 while log_messages.iolder():
