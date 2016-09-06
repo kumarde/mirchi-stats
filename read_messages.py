@@ -18,6 +18,7 @@ max_liked_messages = []
 
 likes = {}
 likes_received = {}
+likes_received_total = {}
 ids_to_members = {}
 members = mirchi_group.members()
 #init members
@@ -33,6 +34,10 @@ for message in mirchi_messages:
             likes_received[message.user_id] += 1
         else:
             likes_received[message.user_id] = 1
+        if message.user_id in likes_received_total:
+            likes_received_total[message.user_id] += len(msg_likes)
+        else:
+            likes_received_total[message.user_id] = len(msg_likes)
     if len(msg_likes) > max_liked:
         max_liked_messages = []
         max_liked = len(msg_likes)
@@ -40,15 +45,18 @@ for message in mirchi_messages:
     for member in msg_likes:
         likes[member.nickname] += 1
 
-print(len(mirchi_messages))
-
 sorted_likes = sorted(likes.items(), key=operator.itemgetter(1))
 sorted_likes_received = sorted(likes_received.items(), key=operator.itemgetter(1))
+sorted_likes_received_total = sorted(likes_received_total.items(), key=operator.itemgetter(1))
 
 #for member in sorted_likes:
 #    print(member[0], member[1])
 
-for member in sorted_likes_received:
+#for member in sorted_likes_received:
+#    if member[0] in ids_to_members:
+#        print(ids_to_members[member[0]], member[1])
+#print(max_liked_messages)
+
+for member in sorted_likes_received_total:
     if member[0] in ids_to_members:
         print(ids_to_members[member[0]], member[1])
-#print(max_liked_messages)
